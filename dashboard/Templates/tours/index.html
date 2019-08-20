@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tours</title>
+</head>
+<body>
+{% extends 'tours/layout.html' %}
+{% load staticfiles %}
+{% block content %}
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap.js' %}"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $(".create-tour").modalForm({
+        formURL: "{% url 'tour_create' %}"
+    });
+});
+</script>
+<div style="padding-top: 30px">
+    {% if user.is_authenticated %}
+     <a href="/packages"><button type="button" class="btn btn-dark" style="margin: 20px;">Tour Packages</button></a>
+    <h4>{{title}}</h4>
+    <ul class="list-group">
+        {% for tour in tours %}
+        <li class="list-group-item"><a href="/tour/{{tour.id}}/edit/">{{tour.location_title}}</a></li>
+        {% endfor %}
+    </ul>
+     <button type="button" class="create-tour btn btn-primary btn-sm btn-block" style="margin-top: 15px;">Add Tour</button>
+
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="modal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+    {% else %}
+    <h5 style="text-align: center;">Please <a href="/accounts/login">Log in</a> to access the dashboard.</h5>
+    {% endif %}
+</div>
+{% endblock %}
+</body>
+</html>

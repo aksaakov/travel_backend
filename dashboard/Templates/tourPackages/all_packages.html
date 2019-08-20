@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Tour Packages</title>
+</head>
+<body>
+{% extends 'tours/layout.html' %}
+{% block content %}
+{% load staticfiles %}
+
+<div style="padding-top: 30px">
+    <a href="/"><button type="button" class="btn btn-primary" style="margin: 20px;">go back</button></a>
+    <ul class="list-group" style="width: 500px; margin-left: auto; margin-right: auto;">
+        {% for pkg in pkgs %}
+        <li class="list-group-item" style="height: 100%; display: flex; justify-content: space-between;">
+            <img src="{{ pkg.icon.url }}" alt="no icon" style="height: 40px;"/>
+            <button type="button" class="update-pkg btn btn-sm btn-light" style="width: 260px;" data-id="{% url 'pkg_update' pkg.pk %}">
+                <span>{{ pkg.package_title }}</span>
+            </button>
+            <button type="button" class="delete-pkg btn btn-danger" data-id="{% url 'pkg_update' pkg.pk %}">x</button>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="modal">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content"></div>
+  </div>
+</div>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap.js' %}"></script>
+<script type="text/javascript">
+$(".update-pkg").each(function () {
+      $(this).modalForm({formURL: $(this).data('id')});
+    });
+</script>
+{% endblock %}
+</body>
+</html>

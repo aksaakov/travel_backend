@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tours</title>
+</head>
+<body>
+{% extends 'tours/layout.html' %}
+{% block content %}
+{% load staticfiles %}
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap.js' %}"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $(".delete-tour").modalForm({
+        formURL: "{% url 'tour_delete' tour.pk %}"
+    });
+});
+</script>
+<form class="was-validated" style="margin-top: 32px;" method="POST" enctype='multipart/form-data'>
+    {% csrf_token %}
+    <div style="justify-content: space-between; display: flex;">
+        <a href="/"><button type="button" class="btn btn-primary" style="margin: 20px;">go back</button></a>
+        <div style="margin: 20px;">
+            <button type="button" class="delete-tour btn btn-danger">Delete</button>
+            <button class="btn btn-success" type="submit">Submit</button>
+        </div>
+    </div>
+    {{ form.as_p }}
+    <img src="{{tour.image.url}}" class="img-thumbnail rounded mx-auto d-block" style="length: 500px; height:500px; margin-top: 20px;" alt="No image">
+</form>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+</body>
+</html>

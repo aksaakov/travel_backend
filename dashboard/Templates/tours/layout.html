@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">-->
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' type='text/css' %}">
+    <title>Tour Manager</title>
+</head>
+<body>
+    <header style="margin: 0px; padding: 0px;">
+        <div style="height: 100%; background-color: lightgrey; text-align: right; padding: 15px; justify-content: space-between; display: flex;">
+            {% if user.is_authenticated %}
+            <text>logged in as: <strong>{{user}}</strong></text>
+            <a href="/" class="btn btn-secondary">Home</a>
+            <a href="/accounts/logout">Log out</a>
+            {% endif %}
+        </div>
+    </header>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+        <br>
+    </div>
+</body>
+</html>
